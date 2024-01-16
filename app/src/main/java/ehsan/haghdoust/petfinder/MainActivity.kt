@@ -1,4 +1,4 @@
-package ehsan.haghdoust.smapleproject
+package ehsan.haghdoust.petfinder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

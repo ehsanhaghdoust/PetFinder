@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "ehsan.haghdoust.smapleproject"
+    namespace = "ehsan.haghdoust.petfinder"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "ehsan.haghdoust.smapleproject"
+        applicationId = "ehsan.haghdoust.petfinder"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

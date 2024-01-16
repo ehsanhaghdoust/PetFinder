@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SmapleProject"
+rootProject.name = "PetFinder"
 include(":app")
