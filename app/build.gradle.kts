@@ -37,7 +37,7 @@ android {
 
     buildFeatures {
         viewBinding = true
-//        dataBinding = true
+        //        dataBinding = true
     }
 }
 
@@ -47,6 +47,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    // Test
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -54,11 +56,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
 
-// For BottomNavigationView from Material Components
+    // For BottomNavigationView from Material Components
     implementation("com.google.android.material:material:1.11.0")
 
     ksp("androidx.room:room-compiler:2.6.1")
-//    ksp("androidx.room:room-compiler:2.6.1")
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.6.1")
@@ -79,5 +80,5 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 
     // Picasso
-    implementation("com.squareup.picasso:picasso:2.8")
+    implementation("com.squareup.picasso:picasso:2.71828")
 }
