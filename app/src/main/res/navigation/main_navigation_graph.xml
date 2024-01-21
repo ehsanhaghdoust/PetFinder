@@ -3,16 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation_graph"
-    app:startDestination="@id/aboutMeFragment">
+    app:startDestination="@id/mainPageFragment">
 
+    <fragment
+        android:id="@+id/mainPageFragment"
+        android:name="ehsan.haghdoust.petfinder.view.fragment.mainPage.MainPageFragment"
+        tools:layout="@layout/fragment_main_page"
+        android:label="MainPageFragment" />
     <fragment
         android:id="@+id/aboutMeFragment"
         android:name="ehsan.haghdoust.petfinder.view.fragment.aboutMe.AboutMeFragment"
-        android:label="AboutMeFragment"
-        tools:layout="@layout/fragment_about_me" />
+        tools:layout="@layout/fragment_about_me"
+        android:label="AboutMeFragment" />
     <fragment
-        android:id="@+id/mainAppFragment"
-        android:name="ehsan.haghdoust.petfinder.view.fragment.mainApp.MainAppFragment"
-        android:label="MainAppFragment"
-        tools:layout="@layout/fragment_main_app" />
+        android:id="@+id/splashFragment"
+        android:name="ehsan.haghdoust.petfinder.view.activity.routing.RoutingActivity"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash"/>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="ehsan.haghdoust.petfinder.view.activity.MainActivity"
+        android:label="MainActivity" />
 </navigation>

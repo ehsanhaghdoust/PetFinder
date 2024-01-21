@@ -9,9 +9,13 @@ import ehsan.haghdoust.petfinder.databinding.FragmentAboutMeBinding
 
 class AboutMeFragment : Fragment() {
 
+    //    private lateinit var viewModel: AboutMeViewModel
     private lateinit var binding: FragmentAboutMeBinding
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentAboutMeBinding.inflate(inflater, container, false)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentAboutMeBinding.inflate(layoutInflater, container, false)
 
         return binding.root
     }
