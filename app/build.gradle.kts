@@ -21,10 +21,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -36,8 +33,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
-        //        dataBinding = true
+        viewBinding = true //        dataBinding = true
     }
 }
 
@@ -61,10 +57,16 @@ dependencies {
     // For BottomNavigationView from Material Components
     implementation("com.google.android.material:material:1.11.0")
 
-    ksp("androidx.room:room-compiler:2.6.1")
+    // Room Database
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-paging:$2.6.1")
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.6.1")
+
+    // To use Kotlin Symbol Processing (KSP)
+    ksp("androidx.room:room-compiler:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
 
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
