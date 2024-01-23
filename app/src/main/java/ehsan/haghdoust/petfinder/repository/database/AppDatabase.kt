@@ -5,10 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ehsan.haghdoust.petfinder.repository.database.dao.DAO
-import ehsan.haghdoust.petfinder.repository.database.entity.UserCredentials
+import ehsan.haghdoust.petfinder.repository.database.entity.UserCredential
 
 
-@Database(entities = [UserCredentials::class], version = 1, exportSchema = false)
+@Database(entities = [UserCredential::class], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun daoObject(): DAO
 

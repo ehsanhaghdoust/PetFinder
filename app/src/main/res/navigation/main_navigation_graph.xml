@@ -22,6 +22,6 @@
         tools:layout="@layout/fragment_splash"/>
     <activity
         android:id="@+id/mainActivity"
-        android:name="ehsan.haghdoust.petfinder.view.activity.MainActivity"
+        android:name="ehsan.haghdoust.petfinder.view.activity.main.MainActivity"
         android:label="MainActivity" />
 </navigation>

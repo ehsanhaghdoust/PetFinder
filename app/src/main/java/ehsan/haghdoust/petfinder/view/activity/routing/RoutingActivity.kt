@@ -4,9 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import ehsan.haghdoust.petfinder.view.activity.MainActivity
+import ehsan.haghdoust.petfinder.view.activity.main.MainActivity
 
 class RoutingActivity: AppCompatActivity() {
 
