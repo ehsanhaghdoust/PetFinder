@@ -8,7 +8,7 @@ import retrofit2.http.GET
 interface ApiInterface {
 
     @GET(Constants.endpoints.token)
-    suspend fun token(oAuthRequestModel: OAuthRequestModel): Response<OAuthResponse>
+    suspend fun getToken(oAuthRequestModel: OAuthRequestModel): Response<OAuthResponse>
 
     @GET("/animals")
     suspend fun animals()

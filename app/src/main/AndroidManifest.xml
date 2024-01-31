@@ -13,7 +13,7 @@
         android:theme="@style/Base.Theme.PetFinder"
         tools:targetApi="31">
         <activity
-            android:name=".view.activity.routing.RoutingActivity"
+            android:name=".view.activity.routing.StartActivity"
             android:theme="@style/Theme.App.Starting"
             android:exported="true">
             <intent-filter>

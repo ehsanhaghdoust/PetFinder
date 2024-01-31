@@ -17,7 +17,7 @@
         android:label="AboutMeFragment" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="ehsan.haghdoust.petfinder.view.activity.routing.RoutingActivity"
+        android:name="ehsan.haghdoust.petfinder.view.activity.routing.StartActivity"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash"/>
     <activity
