@@ -1,6 +1,9 @@
-package ehsan.haghdoust.petfinder.util
+package ehsan.haghdoust.petfinder.repository.network
 
-object Constants {
+import ehsan.haghdoust.petfinder.R
+import ehsan.haghdoust.petfinder.model.general.NetworkError
+
+object NetworkConstants {
     object Service {
         const val grantType = "client_credentials"
         const val clientId = "vvMWwkQiDu5GTC7afNvLg9AROWGUShSGmBR4tjBodCSpJ2kqGb"

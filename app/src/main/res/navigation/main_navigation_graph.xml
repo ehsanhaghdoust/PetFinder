@@ -15,13 +15,4 @@
         android:name="ehsan.haghdoust.petfinder.view.fragment.aboutMe.AboutMeFragment"
         tools:layout="@layout/fragment_about_me"
         android:label="AboutMeFragment" />
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="ehsan.haghdoust.petfinder.view.activity.routing.StartActivity"
-        android:label="SplashFragment"
-        tools:layout="@layout/fragment_splash"/>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="ehsan.haghdoust.petfinder.view.activity.main.MainActivity"
-        android:label="MainActivity" />
 </navigation>

@@ -11,7 +11,7 @@ import ehsan.haghdoust.petfinder.repository.database.entity.UserCredential
 interface DAO {
 
     @Query("Select * from UserCredential")
-    fun getToken(): List<UserCredential>
+    fun getToken(): UserCredential?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveToken(userCredential: UserCredential)

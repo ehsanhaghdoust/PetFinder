@@ -85,4 +85,7 @@ dependencies {
 
     // Picasso
     implementation("com.squareup.picasso:picasso:2.71828")
+
+    // Lottie
+    implementation("com.airbnb.android:lottie:3.4.0")
 }

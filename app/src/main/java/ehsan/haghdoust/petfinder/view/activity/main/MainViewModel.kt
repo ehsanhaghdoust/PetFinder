@@ -9,7 +9,8 @@ import ehsan.haghdoust.petfinder.model.response.OAuthResponse
 import ehsan.haghdoust.petfinder.repository.database.AppDatabase
 import ehsan.haghdoust.petfinder.repository.database.entity.UserCredential
 import ehsan.haghdoust.petfinder.repository.network.ApiClient
-import ehsan.haghdoust.petfinder.util.Constants
+import ehsan.haghdoust.petfinder.repository.network.ApiInterface
+import ehsan.haghdoust.petfinder.repository.network.NetworkConstants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -26,11 +27,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private suspend fun getToken() {
-        val oAuthRequestModel = OAuthRequestModel(grantType = Constants.Service.grantType,
-            clientId = Constants.Service.clientId,
-            clientSecret = Constants.Service.clientSecret)
+        val oAuthRequestModel = OAuthRequestModel(grantType = NetworkConstants.Service.grantType,
+            clientId = NetworkConstants.Service.clientId,
+            clientSecret = NetworkConstants.Service.clientSecret)
 
-        val response = ApiClient().client.getToken(oAuthRequestModel)
+        val response = ApiClient().getClient().create(ApiInterface::class.java).getToken(oAuthRequestModel)
         when {
             response.isSuccessful -> {
                 response.body()?.let {

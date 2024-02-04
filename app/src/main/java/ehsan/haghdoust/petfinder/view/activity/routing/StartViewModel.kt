@@ -2,13 +2,20 @@ package ehsan.haghdoust.petfinder.view.activity.routing
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import ehsan.haghdoust.petfinder.R
+import ehsan.haghdoust.petfinder.model.general.NetworkError
 import ehsan.haghdoust.petfinder.model.request.OAuthRequestModel
 import ehsan.haghdoust.petfinder.model.response.OAuthResponse
 import ehsan.haghdoust.petfinder.repository.database.AppDatabase
 import ehsan.haghdoust.petfinder.repository.database.entity.UserCredential
 import ehsan.haghdoust.petfinder.repository.network.ApiClient
-import ehsan.haghdoust.petfinder.util.Constants
+import ehsan.haghdoust.petfinder.repository.network.ApiInterface
+import ehsan.haghdoust.petfinder.repository.network.NetworkConstants
+import ehsan.haghdoust.petfinder.util.NetworkCallState
+import ehsan.haghdoust.petfinder.util.NetworkUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,8 +23,11 @@ import kotlinx.coroutines.launch
 
 class StartViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading = _isLoading.asStateFlow()
+    private val _networkCallState = MutableStateFlow(NetworkCallState.LOADING)
+    val isLoading = _networkCallState.asStateFlow()
+    private val _error = MutableLiveData<NetworkError>()
+    val error: LiveData<NetworkError>
+        get() = _error
 
     private val database = AppDatabase.getInstance(application.applicationContext).daoObject()
 
@@ -29,46 +39,64 @@ class StartViewModel(application: Application) : AndroidViewModel(application) {
 
     private suspend fun checkCredentials() {
         val userCredential = database.getToken()
-        if (userCredential.isEmpty()) {
-            getToken()
-        } else if (userCredential.count() > 1) {
-            database.deleteTokens()
-            getToken()
-        } else {
-            if ((userCredential[0].retrievedTime + userCredential[0].expiresIn) < System.currentTimeMillis()) {
-                val oAuthRequestModel = OAuthRequestModel(grantType = Constants.Service.grantType,
-                    clientId = Constants.Service.clientId,
-                    clientSecret = Constants.Service.clientSecret)
-                val token = ApiClient().client.getToken(oAuthRequestModel)
+        userCredential?.let {
+            if ((userCredential.retrievedTime + userCredential.expiresIn) < System.currentTimeMillis()) {
+                val oAuthRequestModel = OAuthRequestModel(grantType = NetworkConstants.Service.grantType,
+                    clientId = NetworkConstants.Service.clientId,
+                    clientSecret = NetworkConstants.Service.clientSecret)
+            } else {
+                getToken()
             }
+        } ?: also {
+            getToken()
         }
-//        _isLoading.value = userCredential != null
+//        if (userCredential.isEmpty() || (userCredential.count() > 1)) {
+//            database.deleteTokens()
+//            getToken()
+//        } else {
+//            if ((userCredential[0].retrievedTime + userCredential[0].expiresIn) < System.currentTimeMillis()) {
+//                val oAuthRequestModel = OAuthRequestModel(grantType = NetworkConstants.Service.grantType,
+//                    clientId = NetworkConstants.Service.clientId,
+//                    clientSecret = NetworkConstants.Service.clientSecret)
+//            } else {
+//                database.deleteTokens()
+//                getToken()
+//            }
+//        }
     }
 
     private suspend fun getToken() {
-        val oAuthRequestModel = OAuthRequestModel(grantType = Constants.Service.grantType,
-            clientId = Constants.Service.clientId,
-            clientSecret = Constants.Service.clientSecret)
-
-        val response = ApiClient().client.getToken(oAuthRequestModel)
-        when {
-            response.isSuccessful -> {
-                response.body()?.let {
-                    saveToken(oAuthResponse = it)
-                } ?: also {
-
+        if(!NetworkUtil.isOnline(context = getApplication<Application>().applicationContext)) {
+            _networkCallState.value = NetworkCallState.NoInternet
+            return
+        } else {
+            val oAuthRequestModel = OAuthRequestModel(grantType = NetworkConstants.Service.grantType,
+                clientId = NetworkConstants.Service.clientId,
+                clientSecret = NetworkConstants.Service.clientSecret)
+            val response = ApiClient().getClient().create(ApiInterface::class.java).getToken(oAuthRequestModel)
+//            val response = ApiClient().getClient()..getToken(oAuthRequestModel)
+            when {
+                response.isSuccessful -> {
+                    response.body()?.let {
+                        _networkCallState.value = NetworkCallState.SUCCESS
+                        saveToken(oAuthResponse = it)
+                    } ?: also {
+                        _networkCallState.value = NetworkCallState.FAIL
+                        _error.value = NetworkError(0, R.string.error_data_corrupted)
+                    }
                 }
-            }
+                else                  -> {
+                    when(response.code()) {
 
-            else                  -> {
-
+                    }
+                    _networkCallState.value = NetworkCallState.FAIL
+                }
             }
         }
     }
 
     private suspend fun saveToken(oAuthResponse: OAuthResponse) {
-        AppDatabase.getInstance(context = getApplication<Application>().applicationContext).daoObject().saveToken(userCredential = UserCredential(
-            tokenType = oAuthResponse.tokenType,
+        database.saveToken(userCredential = UserCredential(tokenType = oAuthResponse.tokenType,
             retrievedTime = System.currentTimeMillis(),
             expiresIn = oAuthResponse.expiresIn,
             accessToken = oAuthResponse.accessToken))

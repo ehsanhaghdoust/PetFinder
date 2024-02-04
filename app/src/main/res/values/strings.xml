@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">PetFinder</string>
+
+    <string name="error_data_corrupted">Corrupted data received from server.</string>
+    <string name="error_data_">Corrupted data received from server.</string>
+
+    <string name="error_401">Access was denied due to invalid credentials</string>
+    <string name="error_403">Access denied due to insufficient access.</string>
+    <string name="error_404">The requested resource was not found.</string>
+    <string name="error_500">The request ran into an unexpected error.</string>
+    <string name="error_00001">The request has missing parameters.</string>
+    <string name="error_00002">Your request contains invalid parameters.</string>
 </resources>
