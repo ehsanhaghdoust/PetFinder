@@ -12,6 +12,7 @@ class LoadingIndicator: DialogFragment() {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
             builder.setView(inflater.inflate(R.layout.alert_loading_indicator, null))
+            builder.setCancelable(false)
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }

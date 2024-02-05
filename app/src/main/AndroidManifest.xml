@@ -16,7 +16,7 @@
         android:theme="@style/Base.Theme.PetFinder"
         tools:targetApi="31">
         <activity
-            android:name=".view.activity.routing.StartActivity"
+            android:name=".view.activity.start.StartActivity"
             android:theme="@style/Theme.petfinder"
             android:exported="true">
             <intent-filter>

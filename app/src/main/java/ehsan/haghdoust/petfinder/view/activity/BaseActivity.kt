@@ -1,6 +1,7 @@
 package ehsan.haghdoust.petfinder.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import ehsan.haghdoust.petfinder.view.dialog.LoadingIndicator
 
 open class BaseActivity: AppCompatActivity() {
@@ -15,6 +16,5 @@ open class BaseActivity: AppCompatActivity() {
         loadingIndicator.dismissNow()
     }
 
-    open fun setObserver() {}
-
+    open suspend fun setObserver() {}
 }

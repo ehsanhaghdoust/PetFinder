@@ -1,4 +1,4 @@
-package ehsan.haghdoust.petfinder.view.activity.routing
+package ehsan.haghdoust.petfinder.view.activity.start
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -16,15 +16,17 @@ import ehsan.haghdoust.petfinder.repository.network.ApiInterface
 import ehsan.haghdoust.petfinder.repository.network.NetworkConstants
 import ehsan.haghdoust.petfinder.util.NetworkCallState
 import ehsan.haghdoust.petfinder.util.NetworkUtil
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 class StartViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _networkCallState = MutableStateFlow(NetworkCallState.LOADING)
-    val isLoading = _networkCallState.asStateFlow()
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        throwable.printStackTrace()
+    }
+
+    private val _networkCallState = MutableLiveData(NetworkCallState.LOADING)
+    val loadingState = _networkCallState
     private val _error = MutableLiveData<NetworkError>()
     val error: LiveData<NetworkError>
         get() = _error
@@ -32,7 +34,7 @@ class StartViewModel(application: Application) : AndroidViewModel(application) {
     private val database = AppDatabase.getInstance(application.applicationContext).daoObject()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             checkCredentials()
         }
     }
@@ -50,46 +52,39 @@ class StartViewModel(application: Application) : AndroidViewModel(application) {
         } ?: also {
             getToken()
         }
-//        if (userCredential.isEmpty() || (userCredential.count() > 1)) {
-//            database.deleteTokens()
-//            getToken()
-//        } else {
-//            if ((userCredential[0].retrievedTime + userCredential[0].expiresIn) < System.currentTimeMillis()) {
-//                val oAuthRequestModel = OAuthRequestModel(grantType = NetworkConstants.Service.grantType,
-//                    clientId = NetworkConstants.Service.clientId,
-//                    clientSecret = NetworkConstants.Service.clientSecret)
-//            } else {
-//                database.deleteTokens()
-//                getToken()
-//            }
-//        }
+    }
+
+    fun reloadToken() {
+        viewModelScope.launch {
+            getToken()
+        }
+
     }
 
     private suspend fun getToken() {
-        if(!NetworkUtil.isOnline(context = getApplication<Application>().applicationContext)) {
+        if (!NetworkUtil.isOnline(context = getApplication<Application>().applicationContext)) {
             _networkCallState.value = NetworkCallState.NoInternet
             return
         } else {
             val oAuthRequestModel = OAuthRequestModel(grantType = NetworkConstants.Service.grantType,
                 clientId = NetworkConstants.Service.clientId,
                 clientSecret = NetworkConstants.Service.clientSecret)
-            val response = ApiClient().getClient().create(ApiInterface::class.java).getToken(oAuthRequestModel)
-//            val response = ApiClient().getClient()..getToken(oAuthRequestModel)
+            val response = ApiClient().getClient().create(ApiInterface::class.java)
+                .getToken(oAuthRequestModel) //            val response = ApiClient().getClient()..getToken(oAuthRequestModel)
             when {
                 response.isSuccessful -> {
                     response.body()?.let {
-                        _networkCallState.value = NetworkCallState.SUCCESS
-                        saveToken(oAuthResponse = it)
+                        _networkCallState.value = NetworkCallState.SUCCESS //                        saveToken(oAuthResponse = it)
                     } ?: also {
                         _networkCallState.value = NetworkCallState.FAIL
                         _error.value = NetworkError(0, R.string.error_data_corrupted)
                     }
                 }
-                else                  -> {
-                    when(response.code()) {
 
+                else                  -> {
+                    _networkCallState.postValue(NetworkCallState.FAIL)
+                    when (response.code()) {
                     }
-                    _networkCallState.value = NetworkCallState.FAIL
                 }
             }
         }
