@@ -1,4 +1,4 @@
-package ehsan.haghdoust.petfinder.view.activity
+package ehsan.haghdoust.petfinder.view.base
 
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar

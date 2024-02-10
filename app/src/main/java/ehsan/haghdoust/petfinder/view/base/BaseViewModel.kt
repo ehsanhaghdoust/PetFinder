@@ -1,4 +1,4 @@
-package ehsan.haghdoust.petfinder.view
+package ehsan.haghdoust.petfinder.view.base
 
 import kotlinx.coroutines.CoroutineExceptionHandler
 

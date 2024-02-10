@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import ehsan.haghdoust.petfinder.databinding.ActivityStartLayoutBinding
 import ehsan.haghdoust.petfinder.util.NetworkCallState
-import ehsan.haghdoust.petfinder.view.activity.BaseActivity
+import ehsan.haghdoust.petfinder.view.base.BaseActivity
 import ehsan.haghdoust.petfinder.view.activity.main.MainActivity
 import kotlinx.coroutines.launch
 
