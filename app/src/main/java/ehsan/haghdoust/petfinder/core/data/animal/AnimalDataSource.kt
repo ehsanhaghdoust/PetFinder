@@ -1,6 +1,6 @@
-package ehsan.haghdoust.core.data.animal
+package ehsan.haghdoust.petfinder.core.data.animal
 
-import ehsan.haghdoust.core.domain.animal.Animal
+import ehsan.haghdoust.petfinder.core.domain.animal.Animal
 
 interface AnimalDataSource {
     suspend fun getAnimals(): List<Animal>?

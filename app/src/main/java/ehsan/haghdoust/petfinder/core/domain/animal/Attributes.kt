@@ -1,4 +1,4 @@
-package ehsan.haghdoust.core.domain.animal
+package ehsan.haghdoust.petfinder.core.domain.animal
 
 
 data class Attributes(val spayed_neutered: Boolean?,

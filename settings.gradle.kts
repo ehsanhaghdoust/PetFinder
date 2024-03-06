@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "PetFinder"
 include(":app")
-include(":core")

@@ -1,4 +1,4 @@
-package ehsan.haghdoust.core.domain.token
+package ehsan.haghdoust.petfinder.core.domain.token
 
 data class Token(val tokenType: String,
                  val retrievedTime: Long,

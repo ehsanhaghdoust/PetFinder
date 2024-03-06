@@ -1,4 +1,4 @@
-package ehsan.haghdoust.core.domain.animal
+package ehsan.haghdoust.petfinder.core.domain.animal
 
 data class Links(val self: Link, val type: Link, val organization: Link)
 

@@ -1,4 +1,4 @@
-package ehsan.haghdoust.core.domain.animal
+package ehsan.haghdoust.petfinder.core.domain.animal
 
 data class Animal(val id: Long,
                   val organization_id: String?,

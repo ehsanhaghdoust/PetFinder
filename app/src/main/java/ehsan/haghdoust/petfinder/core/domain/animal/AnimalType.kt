@@ -1,4 +1,4 @@
-package ehsan.haghdoust.core.domain.animal
+package ehsan.haghdoust.petfinder.core.domain.animal
 
 //data class AnimalType(val name: String, val coats: List<String>, val colors: List<String>, val _links: Links)
 //
